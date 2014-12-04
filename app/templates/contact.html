@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="row-fluid">
+
+			<div class="hero-unit">
+				<div class="span12">
+					<h1>Contact Us</h1>
+						<p>Dont hestitate to contact us via this form:</p>
+                    <form action="" method="post" >
+                          <div class="control-group">
+                            <label for="InputName">Your Name</label>
+                              <input type="text" class="span5" name="InputName" id="inputName" placeholder="Enter Name" required>
+                          </div>
+                          <div class="control-group">
+                            <label for="InputEmail">Your Email</label>
+                              <input type="email" class="span5" id="inputEmail" name="InputEmail" placeholder="Enter Email" required  >
+                          </div>
+                          <div class="control-group">
+                            <label for="InputMessage">Message</label>
+                              <textarea name="InputMessage" id="inputMessage" class="span5" rows="8" required></textarea>
+                          </div>
+                          <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info">
+                    </form>
+				</div>
+				<div class="clearfix"></div>
+
+			</div>
+		</div>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+<script>
+    $(document).ready(function() {
+        $("#submit").click(function() {
+            var name = $("#inputName").val();
+            var email = $("#inputEmail").val();
+            var message = $("#inputMessage").val();
+
+            if (name === "" || email === "" || message === "") {
+                alert("Please fill all the form input!");
+            } else {
+                $.ajax({
+                    url: "/contact",
+                    type: "POST",
+                    data: {"name": name, "email": email, "message": message},
+                    success: function(response) {
+                        console.log(response);
+                        window.location.reload();
+                    }
+                })
+            }
+
+            return false;
+        })
+    })
+</script>
+
+{% endblock %}

@@ -27,6 +27,19 @@
     -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
     -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
 }
+#sukses {
+    width: 600px;
+    padding: 30px;
+    display: none;
+    z-index: -1;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
 </style>
 {% endblock %}
 
@@ -99,7 +112,7 @@
             {% endif %}
             <textarea style="width: 100%; height: 150px;"></textarea>
             {% if session.username %}
-            <button id="buttonSubmitComment">Submit</button>
+            <a id="aSukses" name="sukses" href="#sukses"><button id="buttonSubmitComment">Submit</button></a>
             {% else %}
             <a href="/users/login?next={{ request.url }}"><button>Please login to submit comment</button></a>
             {% endif %}
@@ -113,6 +126,12 @@
     <div id="test">
         <p>Embed code for this ebooks:</p>
         <textarea style="width: 535px; height: 200px; font-size: 12px;"><table><tr><td><a href="{{ config['DOMAIN_URL'] }}/read/{{ data['_id'] }}/{{ data['title']|slug }}">Click here to download this ebook</a></td></tr><tr><td><iframe src="http://docs.google.com/viewer?url={{ data['url'] }}&embedded=true" frameborder="0" style="width: 500px; height: 600px;"></iframe></td></tr><tr><td>View more <a href="{{ config['DOMAIN_URL'] }}/read/{{ data['_id'] }}/{{ data['title']|slug }}">ebooks</a> on <a href="{{ config['DOMAIN_URL'] }}">{{ config['DOMAIN_URL'] }}</a></td></tr></table></textarea>
+    </div>
+    <!-- End modal -->
+
+    <!-- Start modal -->
+    <div id="sukses" style="display: none;">
+        <p>Thank you for the comment</p>
     </div>
     <!-- End modal -->
 
@@ -149,7 +168,7 @@
 {% if session.username %}
 <script>
     $(document).ready(function() {
-        $("#buttonSubmitComment").click(function() {
+        $("#aSukses").click(function() {
             var text = $(this).parent().find("textarea").val();
             var oid = "{{ data['_id'] }}";
             if (text === "") {
@@ -162,7 +181,9 @@
                     data: {"oid": oid, "text": text},
                     success: function(response) {
                         console.log(response);
-                        // show modal thank you for your comment
+                        window.setTimeout(function() {
+                            window.location.reload();  // refresh the page
+                        }, 500);
                     }
                 })
             }
@@ -192,6 +213,7 @@
 <script>
     $(document).ready(function() {
         $("#go").leanModal();
+        $("#aSukses").leanModal();
     })
 </script>
 {% endblock %}

@@ -234,7 +234,12 @@ def users_add_collection():
     if request.method == "POST":
         dbentity = c["entities"]
         oid = request.form["oid"]
-        dbentity.users.update({"username": session['username']}, {"$push": {"favorited": oid}})
+        # jika ada key favorited
+        if dbentity.users.find_one({"username": session["username"]}).has_key("favorited"):
+            # jika oid tidak ada di favorited,
+            if oid not in dbentity.users.find_one({"username": session["username"]})["favorited"]:
+                # tambahkan oid ke favorited
+                dbentity.users.update({"username": session['username']}, {"$push": {"favorited": oid}})
         return "sukses %s" % oid
 
 

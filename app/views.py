@@ -777,6 +777,7 @@ def users_public_view(username):
     data = dbuser.users.find_one({"username": session.get("username")})
     try:
         favorites = dbuser.users.find_one({"username": username})["favorited"]
+        favorites = list(set(favorites))  # unique only
     except:
         favorites = []
 
@@ -787,18 +788,22 @@ def users_public_view(username):
     titles = []
     if favorites:
         for i in favorites:
-            try:
-                datafavorites = pdfdb.pdf.find_one({"_id": ObjectId(i)})
+            # get the data
+            datafavorites = pdfdb.pdf.find_one({"_id": ObjectId(i)})
+            # jika ada fpath (thumbnail tersedia)
+            if datafavorites.has_key("fpath"):
                 image_path = datafavorites["fpath"]
                 title = slugify(datafavorites["title"])
 
                 thumbs.append(True)
                 images.append(image_path)
                 titles.append(title)
-            except:
+            else:
+                title = slugify(datafavorites["title"])
+
                 thumbs.append(False)
                 images.append("")
-                titles.append("")
+                titles.append(title)
 
     # zip it
     favorites = zip(favorites, thumbs, images, titles)

@@ -1,6 +1,24 @@
-    {% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block title %}Homepage{% endblock %}
+
+{% block css %}
+<style>
+#added {
+    width: 600px;
+    padding: 30px;
+    display: none;
+    z-index: -1;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
+</style>
+{% endblock %}
 
     {% block content %}
 	<div class="row-fluid">
@@ -63,7 +81,7 @@
                     Source: &nbsp;<a href="/view/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
                     Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;"></span><br />
                     {% if session %}
-                    Add to your collection: <span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green;" data-oid="{{ d['_id'] }}"></span>
+                    Add to your collection: <span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green; cursor: pointer;" data-oid="{{ d['_id'] }}"></span><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: green; display: none;"></span>
                     {% endif %}
                 </p>
                 {% if "admin" in session %}
@@ -85,6 +103,14 @@
 		</div><!--/span-->
 	</div>
 	<!-- end row-->
+
+    <!-- Start modal -->
+    <div id="added" style="display: none;">
+        <p>Added to your collection.</p>
+    </div>
+    <!-- End modal -->
+
+
     {% endblock %}
 
 
@@ -122,9 +148,15 @@
                 type: "POST",
                 data: {"oid": oid},
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
+
+                    // window.setTimeout(function() {
+                    //    window.location.reload();  // refresh the page
+                    // }, 500);
                 }
             })
+            $(this).hide();
+            $(this).parent().find(".glyphicon-ok").fadeIn();
             return false;
         })
         $(".h2Title").click(function() {

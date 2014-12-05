@@ -87,7 +87,7 @@
                     Source: &nbsp;<a href="/view/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
                     Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;"></span><br />
                     {% if session %}
-                    Add to your collection: <span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green;" data-oid="{{ d['_id'] }}"></span>
+                    Add to your collection: <a href="/read/{{ d['_id'] }}/{{ d['title']|truncate(50)|slug }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green; cursor: pointer;" data-oid="{{ d['_id'] }}"></span></a>
                     {% endif %}
                 </p>
                 {% if "admin" in session %}
@@ -146,6 +146,7 @@
 {% endif %}
 <script>
     $(document).ready(function() {
+        /*
         $(".glyphicon-plus").click(function() {
             var oid = $(this).attr("data-oid");
             $.ajax({
@@ -158,6 +159,7 @@
             })
             return false;
         })
+        */
         $(".h2Title").click(function() {
             var oid = $(this).attr("data-oid");
             var title = $(this).attr("data-title");

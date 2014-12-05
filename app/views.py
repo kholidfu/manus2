@@ -142,7 +142,7 @@ def index():
 @app.route("/<first_word>/<full_word>")
 def search(first_word, full_word):
     """
-    ini diganti aja, rawan banned kaya korio
+    ini diganti aja, rawan banned kaya
     """
     docdb = c["pdfs"]
     data_raw = docdb.command("text", "pdf", search=full_word, limit=10)
@@ -155,8 +155,8 @@ def search(first_word, full_word):
         d["updated"] = humanize.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=random.randint(0, 600)))
 
     # building related data
-    korioterms = c["korioterms"]
-    related_data = korioterms.command("text", "term", search=full_word, limit=10)
+    terms = c["terms"]
+    related_data = terms.command("text", "term", search=full_word, limit=10)
     related_data = [d["obj"] for d in related_data["results"]]
 
     return render_template("search.html", data=data, keyword=full_word, results_count=results_count, related_data=related_data)
@@ -177,8 +177,8 @@ def suggested_tags(tag):
     data = [d["obj"] for d in data["results"]]
 
     # building related data
-    korioterms = c["korioterms"]
-    related_data = korioterms.command("text", "term", search=tag, limit=10)
+    terms = c["terms"]
+    related_data = terms.command("text", "term", search=tag, limit=10)
     related_data = [d["obj"] for d in related_data["results"]]
 
     # get tags suggestion to enrich index and strengthen onpage seo
@@ -291,18 +291,18 @@ def admin_filter():
     - cari variasi keyword lain dari search term tadi di bing
     - post!
     """
-    korioterms = c["korioterms"]
-    skip_number = random.randint(0, korioterms.term.find().count() - 10)
+    terms = c["terms"]
+    skip_number = random.randint(0, terms.term.find().count() - 10)
     # try to find all keywords with status 0
     try:
-        data = korioterms.term.find().skip(skip_number).limit(10)
+        data = terms.term.find().skip(skip_number).limit(10)
     except:
         # show random term inputan lama yang tidak ada status nye
-        data = korioterms.term.find().skip(skip_number).limit(10)
+        data = terms.term.find().skip(skip_number).limit(10)
     # show latest term
     # data = dbterms.term.find().sort("_id", -1).limit(10)
     # jumlah data
-    data_count = korioterms.term.find().count()
+    data_count = terms.term.find().count()
     return render_template("admin/admin_filter.html", data=data, data_count=data_count)
 
 
@@ -313,10 +313,10 @@ def admin_filter_by_keyword(keyword):
     search full text field term
     biar mempercepat kerjaan
     """
-    korioterms = c["korioterms"]
-    # skip_number = random.randint(0, korioterms.term.find().count() - 10)
-    data = korioterms.command("text", "term", search=keyword, filter={"status": None}, limit=10)
-    data_count = korioterms.command("text", "term", search=keyword, filter={"status": None})["stats"]
+    terms = c["terms"]
+    # skip_number = random.randint(0, terms.term.find().count() - 10)
+    data = terms.command("text", "term", search=keyword, filter={"status": None}, limit=10)
+    data_count = terms.command("text", "term", search=keyword, filter={"status": None})["stats"]
     data = [d["obj"] for d in data["results"]]
     return render_template("admin/admin_filter_by_keyword.html", data=data, keyword=keyword, data_count=data_count)
 
@@ -341,9 +341,9 @@ def find_related_keyword(search_engine):
 @admin_login_required
 def delete_keyword():
     if request.method == "POST":
-        korioterms = c["korioterms"]
+        terms = c["terms"]
         oid = request.form["oid"]
-        korioterms.term.remove({"_id": ObjectId(oid)})
+        terms.term.remove({"_id": ObjectId(oid)})
         return "sukses deleting keyword with id: %s" % oid
 
 
@@ -355,16 +355,16 @@ def insert_keyword():
         term = request.form["term"]
         if not pdfterms.term.find_one({"term": term}):
             pdfterms.term.insert({"term": term})
-        # update korioterms document status dari 0 => 1
-        korioterms = c["korioterms"]
-        korioterms.term.update({"term": term}, {"$set": {"status": 1}})
+        # update terms document status dari 0 => 1
+        terms = c["terms"]
+        terms.term.update({"term": term}, {"$set": {"status": 1}})
         return "sukses inserting term: %s" % term
 
 
 @app.route("/admin/insert-all", methods=["POST"])
 @admin_login_required
 def insert_keywords():
-    korioterms = c["korioterms"]
+    terms = c["terms"]
     pdfterms = c["pdfterms"]
 
     if request.method == "POST":
@@ -374,8 +374,8 @@ def insert_keywords():
             print term
             if not pdfterms.term.find_one({"term": term}):
                 pdfterms.term.insert({"term": term})
-            # update korioterms document status dari 0 => 1
-            korioterms.term.update({"term": term}, {"$set": {"status": 1}})
+            # update terms document status dari 0 => 1
+            terms.term.update({"term": term}, {"$set": {"status": 1}})
         return "sukses inserting all terms"
 
 
@@ -691,7 +691,7 @@ def stats():
     """
     isinya tentang statistik yang diperlukan
     setiap kali visitor datang ke halaman search
-    update db korioterms: {$inc: {hits: 1}}
+    update db terms: {$inc: {hits: 1}}
     """
     return render_template("admin/admin_stats.html")
 

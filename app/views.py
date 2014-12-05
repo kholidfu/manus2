@@ -191,7 +191,7 @@ def suggested_tags(tag):
     return render_template("tags.html", data=data, tag=tag, results_count=results_count, related_data=related_data, tags=tags)
 
 
-@app.route("/read/<oid>/<title>")
+@app.route("/read/<oid>/<title>", methods=["GET", "POST"])
 def reader(oid, title):
     """
     PDF reader using google docs preview
@@ -206,7 +206,6 @@ def reader(oid, title):
     random.shuffle(tags)
     tags = tags[:5]
 
-    print session
 
     return render_template("reader.html", data=data, tags=tags)
 
@@ -246,9 +245,11 @@ def user_add_comment():
     if request.method == "POST":
         oid = request.form["oid"]
         text = request.form["text"]
+        print session
+        username = session["username"]
         # input into dbase => home => comments => []
-        pdfdb.pdf.update({"_id": ObjectId(oid)}, {"$push": {"comments": {"username": username, "text": comment, "added": added}}})
-        return "sukses %s %s" % (text, oid)
+        pdfdb.pdf.update({"_id": ObjectId(oid)}, {"$push": {"comments": {"username": username, "text": text, "added": datetime.datetime.now()}}})
+        return "sukses %s %s by %s" % (text, oid, username)
 
 
 @app.route("/about")

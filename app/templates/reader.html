@@ -40,6 +40,19 @@
     -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
     -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
 }
+#share {
+    width: 600px;
+    padding: 30px;
+    display: none;
+    z-index: -1;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
 #added {
     width: 600px;
     padding: 30px;
@@ -99,8 +112,8 @@
 	<!--start row-->
     <div class="row-fluid">
 		<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #f0ad4e;">
-            <h3 style="font-size: 11px;">Reader | <a id="go" name="test" href="#test">Embed</a> | Share
-                {% if session %}
+            <h3 style="font-size: 11px;">Reader | <a id="go" name="test" href="#test">Embed</a> | <a id="aShare" name="share" href="#share">Share</a>
+                {% if session.username %}
                 | <span id="plusAddColl" data-oid="{{ data['_id'] }}"><a id="aAdd" name="added" href="#added">Add to your collection</a></span>
                 {% endif %}
                 | <a href="/download/{{ data['title'] }}">Download</a>
@@ -151,6 +164,12 @@
     <!-- Start modal -->
     <div id="added" style="display: none;">
         <p>Added to your collection.</p>
+    </div>
+    <!-- End modal -->
+
+    <!-- Start modal -->
+    <div id="share" style="display: none;">
+        <p>Share this.</p>
     </div>
     <!-- End modal -->
 
@@ -237,6 +256,7 @@
         $("#go").leanModal();
         $("#aSukses").leanModal();
         $("#aAdd").leanModal();
+        $("#aShare").leanModal();
     })
 </script>
 {% endblock %}

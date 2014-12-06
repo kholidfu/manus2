@@ -1,6 +1,34 @@
-    {% extends "base.html" %}
+{% extends "base.html" %}
 
 {% block title %}{{ tag|replace("-", " ")|title }}{% endblock %}
+
+{% block css %}
+<style>
+#lean_overlay {
+    position: fixed;
+    z-index: 10000;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+#download {
+    width: 600px;
+    padding: 30px;
+    display: none;
+    z-index: -1;
+    background: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+}
+</style>
+{% endblock %}
 
     {% block content %}
 	<div class="row-fluid">
@@ -25,8 +53,9 @@
                             {% if not loop.last %},{% else %}.{% endif %}
                             {% endfor %}
                         </p>
-		           		<p class="noLink"><a class="btn btn-primary btn-large">
-						Download »</a></p>
+		           		<p class="noLink">
+                            <a class="btn btn-primary btn-large" id="aDownload" name="download" href="#download">Download</a>
+                        </p>
 				</div>
 
 				<div class="clearfix"></div>
@@ -110,13 +139,27 @@
            		<h3>Related Query</h3>
            		<ol>
                     {% for rel in related_data %}
-                    <li style="font-size: 11px;">{{ rel['term'] }}</li>
+                    <li style="font-size: 11px;"><a href="/tags/{{ rel['term']|slug }}">{{ rel['term']|truncate(40) }}</a></li>
                     {% endfor %}
                 </ol>
 			</div>
 		</div><!--/span-->
 	</div>
 	<!-- end row-->
+
+    <!-- Start modal -->
+    <div id="download" style="display: none;">
+        <p>Please wait while we are checking the destination url.</p>
+        <img src="/static/images/loading.gif" id="imgLoading">
+        <p id="pMessage" style="display: none;">
+            Sorry the source destination seems to be error, we are strongly
+            encourage you to register and add to your collection instead of
+            downloading. <br /><br />
+            Apologize for this inconvenience.
+        </p>
+    </div>
+    <!-- End modal -->
+
     {% endblock %}
 
 {% block js %}
@@ -166,6 +209,20 @@
             window.open("/read/" + oid + "/" + title);
             // alert("/read/" + oid + "/" + title);
             return false;
+        })
+    })
+</script>
+<script src="/static/js/jquery.leanModal.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#aDownload").leanModal();
+
+        // download animation
+        $("#aDownload").click(function() {
+            setTimeout(function() {
+                $('#imgLoading').fadeOut('fast');
+                $("#pMessage").fadeIn("slow");
+            }, 10000); // 10 seconds
         })
     })
 </script>

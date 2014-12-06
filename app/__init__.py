@@ -29,6 +29,7 @@ from app import views
 app.config["DOMAIN_NAME"] = "example"
 app.config["DOMAIN_URL"] = "http://127.0.0.1:5000"
 app.config["VERSION"] = "1.0"
+app.config["APP_TITLE"] = "OtoManus v2.0"
 
 # important! needed for login things >> joss
 app.secret_key = "vertigo"

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>{% block title %}{% endblock %} | {{ config['DOMAIN_NAME'] }}</title>
+<title>{% block title %}{% endblock %} | {{ config['APP_TITLE'] }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="keywords" content="">
@@ -40,7 +40,7 @@
     <div class="row-fluid">
 
     	<div class="span8 logo">
-	    	<a href="/" title="Framing Framework">Farming Framework</a>
+	    	<a href="/" title="Framing Framework">{{ config["APP_TITLE"] }}</a>
     	</div>
 
     	<div class="span3 offset1 telefon">

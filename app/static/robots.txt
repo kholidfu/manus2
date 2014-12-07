@@ -1,3 +1,4 @@
 /users-add-location
 /search/*
 /add-comment
+/report-abuse

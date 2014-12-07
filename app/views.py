@@ -257,6 +257,20 @@ def user_add_comment():
         return "sukses %s %s by %s" % (text, oid, username)
 
 
+@app.route("/report-abuse", methods=["POST"])
+@user_login_required
+def report_abuse():
+    admindb = c["admindb"]
+    if request.method == "POST":
+        # insert url to the admindb.abuse
+        oid = request.form["oid"]
+        title = request.form["title"]
+        added = datetime.datetime.now()
+        url = "/read/%s/%s" % (oid, title)
+        admindb.abuse.insert({"url": url, "added": added})
+        return "sukses %s" % url
+
+
 @app.route("/about")
 def about():
     return render_template("about.html")
@@ -711,6 +725,14 @@ def update_on_the_fly():
         pdfdb = c["pdfs"]
         pdfdb.pdf.update({"_id": ObjectId(oid)}, {"$set": {"title": title}})
         return "sukses"
+
+
+@app.route("/admin/abuse-report")
+@admin_login_required
+def admin_report_abuse():
+    admindb = c["admindb"]
+    data = admindb.abuse.find().sort("_id", -1).limit(10)
+    return render_template("admin/admin_abuse_report.html", data=data)
 
 
 @app.route("/admin/login", methods=["GET", "POST"])

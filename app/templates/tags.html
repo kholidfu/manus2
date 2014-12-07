@@ -137,7 +137,7 @@
 			</div>
             <div class="hero-unit smallerTopPadding">
            		<h3>Related Query</h3>
-           		<ol>
+           		<ol style="margin-left: 15px;">
                     {% for rel in related_data %}
                     <li style="font-size: 11px;"><a href="/tags/{{ rel['term']|slug }}">{{ rel['term']|truncate(40) }}</a></li>
                     {% endfor %}

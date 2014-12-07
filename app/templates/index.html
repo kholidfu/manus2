@@ -79,7 +79,7 @@
                     Updated: {{ d['thumb_updated']|humanize }}<br />
                     Filetype: Portable Document Format (PDF)<br />
                     Source: &nbsp;<a href="/view/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
-                    Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;"></span><br />
+                    Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;" data-oid="{{ d['_id'] }}" data-title="{{ d['title']|truncate(50)|slug }}"></span><br />
                     {% if session %}
                     Add to your collection: <span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green; cursor: pointer;" data-oid="{{ d['_id'] }}"></span><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: green; display: none;"></span>
                     {% endif %}
@@ -141,6 +141,25 @@
 {% endif %}
 <script>
     $(document).ready(function() {
+        $(".glyphicon-flash").click(function() {
+            // report abuse
+            var oid = $(this).attr("data-oid");
+            var title = $(this).attr("data-title");
+            var username = "{{ session.username }}";
+            if (username === "") {
+                alert("please login");
+            } else {
+                $.ajax({
+                    url: "/report-abuse",
+                    type: "POST",
+                    data: {"oid": oid, "title": title},
+                    success: function(response) {
+                        console.log(response);
+                    }
+                })
+            }
+            return false;
+        })
         $(".glyphicon-plus").click(function() {
             var oid = $(this).attr("data-oid");
             $.ajax({
@@ -148,11 +167,7 @@
                 type: "POST",
                 data: {"oid": oid},
                 success: function(response) {
-                    // console.log(response);
-
-                    // window.setTimeout(function() {
-                    //    window.location.reload();  // refresh the page
-                    // }, 500);
+                    console.log(response);
                 }
             })
             $(this).hide();

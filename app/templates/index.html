@@ -79,10 +79,11 @@
                     Updated: {{ d['thumb_updated']|humanize }}<br />
                     Filetype: Portable Document Format (PDF)<br />
                     Source: &nbsp;<a href="/view/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
-                    Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;" data-oid="{{ d['_id'] }}" data-title="{{ d['title']|truncate(50)|slug }}"></span><br />
-                    {% if session %}
+
+                    Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;" data-oid="{{ d['_id'] }}" data-title="{{ d['title']|truncate(50)|slug }}"></span><span class="glyphicon glyphicon-saved abused" aria-hidden="true" style="color: red; display: none;"></span><br />
+
                     Add to your collection: <span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green; cursor: pointer;" data-oid="{{ d['_id'] }}"></span><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color: green; display: none;"></span>
-                    {% endif %}
+
                 </p>
                 {% if "admin" in session %}
                 <button type="submit" class="buttonUpdate" data-oid="{{ d['_id'] }}">Update</button>
@@ -158,18 +159,25 @@
                     }
                 })
             }
+            $(this).hide();
+            $(this).parent().find(".abused").fadeIn();
             return false;
         })
         $(".glyphicon-plus").click(function() {
             var oid = $(this).attr("data-oid");
-            $.ajax({
-                url: "/users-add-collection",
-                type: "POST",
-                data: {"oid": oid},
-                success: function(response) {
-                    console.log(response);
-                }
-            })
+            var username = "{{ session.username }}";
+            if (username === "") {
+                alert("please login");
+            } else {
+                $.ajax({
+                    url: "/users-add-collection",
+                    type: "POST",
+                    data: {"oid": oid},
+                    success: function(response) {
+                        console.log(response);
+                    }
+                })
+            }
             $(this).hide();
             $(this).parent().find(".glyphicon-ok").fadeIn();
             return false;

@@ -267,7 +267,8 @@ def report_abuse():
         title = request.form["title"]
         added = datetime.datetime.now()
         url = "/read/%s/%s" % (oid, title)
-        admindb.abuse.insert({"url": url, "added": added})
+        if admindb.abuse.find_one({"url": url}) is None:
+            admindb.abuse.insert({"url": url, "added": added})
         return "sukses %s" % url
 
 
@@ -852,7 +853,8 @@ def users_logout():
 def users():
     user = session["username"]
     # if username == admin: redirect to admin page
-    return render_template("/users/index.html", user=user)
+    # return render_template("/users/index.html", user=user)
+    return redirect("/", 301)
 
 @app.route("/users/register", methods=["GET", "POST"])
 def users_register():

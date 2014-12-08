@@ -139,6 +139,35 @@ def index():
     return render_template("index.html", data=data)
 
 
+@app.route("/page/<int:num>")
+def index_paging(num):
+    # redirect to hompage if num == 1
+    if num == 1:
+        return redirect("/", 301)
+
+    # get data based on index
+    docdb = c["pdfs"]
+
+    # per page == 10
+    per_page = 10
+
+    # skipped
+    skipped = per_page * (num - 1)
+
+    # detect last page
+    last_page = False
+    thumb_data_count = docdb.pdf.find({"thumb_updated": {"$exists": True}}).count()
+
+    if (thumb_data_count / 10) + 1 == int(num):
+        # we are on last page
+        last_page = True
+
+    print
+
+    data = [doc for doc in docdb.pdf.find({"thumb_updated": {"$exists": True}}).sort("added", -1).skip(skipped).limit(10)]
+    return render_template("index_paging.html", data=data, num=num, last_page=last_page)
+
+
 @app.route("/<first_word>/<full_word>")
 def search(first_word, full_word):
     """

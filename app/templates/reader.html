@@ -133,7 +133,7 @@
                 {% if session.username %}
                 | <span id="plusAddColl" data-oid="{{ data['_id'] }}"><a id="aAdd" name="added" href="#added">Add to your collection</a></span>
                 {% endif %}
-                | <a href="/download/{{ data['title'] }}">Download</a>
+                | <a href="/download/{{ data['title'] }}" rel="noindex, nofollow">Download</a>
             </h3>
             <p style="padding-bottom: 0px;"></p>
             <iframe src="http://docs.google.com/viewer?url={{ data['url'] }}&embedded=true" frameborder="0" style="width: 100%; height: 600px;"></iframe>

@@ -26,10 +26,10 @@ from app import views
 
 # global domain name config
 # calling from jinja => {{ config["domain_name"] }}
-app.config["DOMAIN_NAME"] = "example"
-app.config["DOMAIN_URL"] = "http://127.0.0.1:5000"
+app.config["DOMAIN_NAME"] = "SEEPDF"
+app.config["DOMAIN_URL"] = "http://seepdf.com"
 app.config["VERSION"] = "1.0"
-app.config["APP_TITLE"] = "OtoManus v2.0"
+app.config["APP_TITLE"] = "SeePDF"
 
 # important! needed for login things >> joss
 app.secret_key = "vertigo"

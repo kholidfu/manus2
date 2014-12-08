@@ -2,3 +2,4 @@
 /search/*
 /add-comment
 /report-abuse
+/download/*

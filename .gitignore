@@ -7,4 +7,4 @@ local/
 .idea/
 assets/
 /admin/*
-/users-add-collection
+*.json

@@ -2,6 +2,10 @@
 
 {% block title %}{{ data['title'] }}{% endblock %}
 
+{% block meta %}
+<link rel="canonical" href="/read/{{ data['_id'] }}/{{ data['title']|truncate(50)|slug }}" />
+{% endblock %}
+
 {% block css %}
 <style>
 #lean_overlay {

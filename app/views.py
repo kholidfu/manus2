@@ -188,19 +188,21 @@ def search(first_word, full_word):
     related_data = terms.command("text", "term", search=full_word, limit=10)
     related_data = [d["obj"] for d in related_data["results"]]
 
-    return render_template("search.html", data=data, keyword=full_word, results_count=results_count, related_data=related_data)
+    return render_template("search.html", data=data, keyword=full_word,
+                           results_count=results_count, related_data=related_data)
 
 
 @app.route("/tags/<tag>")
 def suggested_tags(tag):
     """
-    seperti di doocu, buat halaman tags yang isinya search term
+    buat halaman tags yang isinya search term
     dari onkeywords.com, adwords, ubersuggests dan sejenisnya
     """
     pdfdb = c["pdfs"]
     tag = tag.replace("-", " ")
     data = pdfdb.command("text", "pdf", search=tag, limit=10)
     results_count = data["stats"]["nscanned"]
+
     # ini harusnya prioritas nyari yang ada thumbnailnya dulu
     # piye carane yo????
     data = [d["obj"] for d in data["results"]]
@@ -210,6 +212,16 @@ def suggested_tags(tag):
     related_data = terms.command("text", "term", search=tag, limit=10)
     related_data = [d["obj"] for d in related_data["results"]]
 
+    ## on-page seo
+    # 1. related tags for meta desc
+    meta_desc = ", ".join([d["term"] for d in related_data][:5])
+    # 2. meta keywords, ambil dari tag, split, join
+    meta_key = ", ".join(tag.split(" "))
+    # 3. meta key tags
+    meta_key_tags = tag.split(" ")[:5]
+    # 4. fake category?
+    meta_key_cat = tag.split(" ")[0]
+
     # get tags suggestion to enrich index and strengthen onpage seo
     tagsdb = c["pdfterms"]
     tags = tagsdb.command("text", "term", search=tag)
@@ -217,7 +229,9 @@ def suggested_tags(tag):
     random.shuffle(tags)
     tags = tags[:5]
 
-    return render_template("tags.html", data=data, tag=tag, results_count=results_count, related_data=related_data, tags=tags)
+    return render_template("tags.html", data=data, tag=tag, results_count=results_count,
+                           related_data=related_data, tags=tags, meta_desc=meta_desc,
+                          meta_key=meta_key, meta_key_tags=meta_key_tags, meta_key_cat=meta_key_cat)
 
 
 @app.route("/read/<oid>/<title>", methods=["GET", "POST"])

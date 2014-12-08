@@ -216,9 +216,9 @@ def suggested_tags(tag):
     # 1. related tags for meta desc
     meta_desc = ", ".join([d["term"] for d in related_data][:5])
     # 2. meta keywords, ambil dari tag, split, join
-    meta_key = ", ".join(tag.split(" "))
-    # 3. meta key tags
-    meta_key_tags = tag.split(" ")[:5]
+    meta_key = ", ".join([t for t in tag.split(" ") if len(t) > 3])
+    # 3. meta key tags with get rid off short word
+    meta_key_tags = [t for t in tag.split(" ")[:5] if len(t) > 3]
     # 4. fake category?
     meta_key_cat = tag.split(" ")[0]
 

@@ -283,6 +283,8 @@ def users_add_collection():
             if oid not in dbentity.users.find_one({"username": session["username"]})["favorited"]:
                 # tambahkan oid ke favorited
                 dbentity.users.update({"username": session['username']}, {"$push": {"favorited": oid}})
+        else:  # user ini belum punya favorited key (user baru kinyis2)
+            dbentity.users.insert({"username": session['username']}, {"$push": {"favorited": oid}})
         return "sukses %s" % oid
 
 

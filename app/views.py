@@ -274,6 +274,9 @@ def download(title):
 @app.route("/users-add-collection", methods=["POST"])
 @user_login_required
 def users_add_collection():
+    """
+    adding favorites books to users collection
+    """
     if request.method == "POST":
         dbentity = c["entities"]
         oid = request.form["oid"]
@@ -284,7 +287,8 @@ def users_add_collection():
                 # tambahkan oid ke favorited
                 dbentity.users.update({"username": session['username']}, {"$push": {"favorited": oid}})
         else:  # user ini belum punya favorited key (user baru kinyis2)
-            dbentity.users.insert({"username": session['username']}, {"$push": {"favorited": oid}})
+            dbentity.users.update({"username": session['username']}, {"$push": {"favorited": oid}})
+
         return "sukses %s" % oid
 
 

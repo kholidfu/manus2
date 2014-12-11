@@ -1,11 +1,9 @@
 from flask import Flask
 from app.admin import admin
 from flask.ext.mail import Mail
-import pymongo
+from ConfigParser import SafeConfigParser
+import os
 
-
-# needed for global settings
-c = pymongo.Connection()
 
 app = Flask(__name__,
         static_folder="static", # match with your static folder
@@ -30,19 +28,22 @@ from app import views
 
 # global domain name config
 # calling from jinja => {{ config["domain_name"] }}
-# ambil informasi ini dari databse admindb.settings
-admindb = c["admindb"]
-data = admindb.settings.find_one()
+# ambil informasi ini dari settings.ini
+parser = SafeConfigParser()
+settings_path = os.path.join(os.getcwd(), "app", "settings.ini")
+parser.read(settings_path)
 
-if not data:  # jika data lom ada (baru deploy/localhost)
-    data = {}
-    data["name"] = "example"
-    data["url"] = "http://127.0.0.1:5000"
+url = parser.get("site_config", "url")
+name = parser.get("site_config", "name")
 
-app.config["SITE_NAME"] = data["name"]
-app.config["SITE_URL"] = data["url"]
+if not url or not name:  # jika data lom ada (baru deploy/localhost)
+    name = "example"
+    url = "http://127.0.0.1:5000"
+
+app.config["SITE_NAME"] = name
+app.config["SITE_URL"] = url
 app.config["VERSION"] = "1.0"
-app.config["APP_TITLE"] = data["name"]
+app.config["APP_TITLE"] = name
 
 # important! needed for login things >> joss
 app.secret_key = "vertigo"

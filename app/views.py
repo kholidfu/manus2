@@ -18,6 +18,8 @@ import urllib2
 from bs4 import BeautifulSoup
 import re
 from urllib import unquote
+from ConfigParser import SafeConfigParser
+import sys
 
 
 # setup database mongo
@@ -347,19 +349,24 @@ def admin():
 @app.route("/admin/settings", methods=["GET", "POST"])
 @admin_login_required
 def admin_settings():
-    admindb = c["admindb"]
+    parser = SafeConfigParser()
+    settings_path = os.path.join(os.getcwd(), "app", "settings.ini")
+    parser.read(settings_path)
+
     if request.method == "POST":
         # save global settings
         url = request.form["url"]
         name = request.form["name"]
-        # admindb.settings.update({})
-        if not admindb.settings.find_one({"role": "admin"}):
-            # insert
-            admindb.settings.insert({"role": "admin", "url": url, "name": name})
-        else:
-            admindb.settings.update({"role": "admin"}, {"$set": {"url": url, "name": name}}, upsert=True)
+        # update settings.ini file
+        url = parser.set("site_config", "url", url)
+        name = parser.set("site_config", "name", name)
+        with open(settings_path, "w") as f:
+            parser.write(f)
         return "sukses"
-    data = admindb.settings.find_one()
+
+    url = parser.get("site_config", "url")
+    name = parser.get("site_config", "name")
+    data = {"name": name, "url": url}
     return render_template("admin/admin_settings.html", data=data)
 
 

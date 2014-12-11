@@ -164,28 +164,28 @@ def index_paging(num):
     return render_template("index_paging.html", data=data, num=num, last_page=last_page)
 
 
-@app.route("/<first_word>/<full_word>")
-def search(first_word, full_word):
-    """
-    ini diganti aja, rawan banned kaya
-    """
-    docdb = c["pdfs"]
-    data_raw = docdb.command("text", "pdf", search=full_word, limit=10)
-    results_count = data_raw["stats"]["nscanned"]
-    data = [d["obj"] for d in data_raw["results"]]
-
-    # creating fake updated data
-    import humanize
-    for d in data:
-        d["updated"] = humanize.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=random.randint(0, 600)))
-
-    # building related data
-    terms = c["terms"]
-    related_data = terms.command("text", "term", search=full_word, limit=10)
-    related_data = [d["obj"] for d in related_data["results"]]
-
-    return render_template("search.html", data=data, keyword=full_word,
-                           results_count=results_count, related_data=related_data)
+#@app.route("/<first_word>/<full_word>")
+#def search(first_word, full_word):
+#    """
+#    ini diganti aja, rawan banned kaya
+#    """
+#    docdb = c["pdfs"]
+#    data_raw = docdb.command("text", "pdf", search=full_word, limit=10)
+#    results_count = data_raw["stats"]["nscanned"]
+#    data = [d["obj"] for d in data_raw["results"]]
+#
+#    # creating fake updated data
+#    import humanize
+#    for d in data:
+#        d["updated"] = humanize.naturaltime(datetime.datetime.now() - datetime.timedelta(seconds=random.randint(0, 600)))
+#
+#    # building related data
+#    terms = c["terms"]
+#    related_data = terms.command("text", "term", search=full_word, limit=10)
+#    related_data = [d["obj"] for d in related_data["results"]]
+#
+#    return render_template("search.html", data=data, keyword=full_word,
+#                           results_count=results_count, related_data=related_data)
 
 
 @app.route("/tags/<tag>")
@@ -195,6 +195,14 @@ def suggested_tags(tag):
     dari onkeywords.com, adwords, ubersuggests dan sejenisnya
     """
     pdfdb = c["pdfs"]
+    tagsdb = c["pdfterms"]
+    terms = c["terms"]
+
+    # prevent keyword injection
+    kwrd = tagsdb.term.find_one({"term": tag.replace("-", " ")})
+    if not kwrd:
+        return redirect("/", 301)
+
     tag = tag.replace("-", " ")
     data = pdfdb.command("text", "pdf", search=tag, limit=10)
     results_count = data["stats"]["nscanned"]
@@ -204,7 +212,7 @@ def suggested_tags(tag):
     data = [d["obj"] for d in data["results"]]
 
     # building related data
-    terms = c["terms"]
+
     related_data = terms.command("text", "term", search=tag, limit=10)
     related_data = [d["obj"] for d in related_data["results"]]
 
@@ -219,7 +227,7 @@ def suggested_tags(tag):
     meta_key_cat = tag.split(" ")[0]
 
     # get tags suggestion to enrich index and strengthen onpage seo
-    tagsdb = c["pdfterms"]
+
     tags = tagsdb.command("text", "term", search=tag)
     tags = [d["obj"] for d in tags["results"]]
     random.shuffle(tags)

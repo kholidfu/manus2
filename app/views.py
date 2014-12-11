@@ -20,12 +20,6 @@ import re
 from urllib import unquote
 
 
-"""
-@TODO:
-membuat admin untuk men-generate thumbnail, filesize ?
-"""
-
-
 # setup database mongo
 c = pymongo.Connection()
 dbentity = c["entities"]  # nanti ada dbentity.user, dbentity.admin, dll
@@ -348,6 +342,25 @@ def disclaimer():
 @admin_login_required
 def admin():
     return render_template("admin/index.html")
+
+
+@app.route("/admin/settings", methods=["GET", "POST"])
+@admin_login_required
+def admin_settings():
+    admindb = c["admindb"]
+    if request.method == "POST":
+        # save global settings
+        url = request.form["url"]
+        name = request.form["name"]
+        # admindb.settings.update({})
+        if not admindb.settings.find_one({"role": "admin"}):
+            # insert
+            admindb.settings.insert({"role": "admin", "url": url, "name": name})
+        else:
+            admindb.settings.update({"role": "admin"}, {"$set": {"url": url, "name": name}}, upsert=True)
+        return "sukses"
+    data = admindb.settings.find_one()
+    return render_template("admin/admin_settings.html", data=data)
 
 
 @app.route("/admin/filter")

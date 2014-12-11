@@ -1,7 +1,11 @@
 from flask import Flask
 from app.admin import admin
 from flask.ext.mail import Mail
+import pymongo
 
+
+# needed for global settings
+c = pymongo.Connection()
 
 app = Flask(__name__,
         static_folder="static", # match with your static folder
@@ -26,10 +30,19 @@ from app import views
 
 # global domain name config
 # calling from jinja => {{ config["domain_name"] }}
-app.config["DOMAIN_NAME"] = "SEEPDF"
-app.config["DOMAIN_URL"] = "http://seepdf.com"
+# ambil informasi ini dari databse admindb.settings
+admindb = c["admindb"]
+data = admindb.settings.find_one()
+
+if not data:  # jika data lom ada (baru deploy/localhost)
+    data = {}
+    data["name"] = "example"
+    data["url"] = "http://127.0.0.1:5000"
+
+app.config["SITE_NAME"] = data["name"]
+app.config["SITE_URL"] = data["url"]
 app.config["VERSION"] = "1.0"
-app.config["APP_TITLE"] = "SeePDF"
+app.config["APP_TITLE"] = data["name"]
 
 # important! needed for login things >> joss
 app.secret_key = "vertigo"

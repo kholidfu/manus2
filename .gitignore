@@ -8,3 +8,4 @@ local/
 assets/
 /admin/*
 *.json
+settings.ini

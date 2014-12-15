@@ -201,7 +201,7 @@ def suggested_tags(tag):
     # prevent keyword injection
     kwrd = tagsdb.term.find_one({"term": tag.replace("-", " ")})
     if not kwrd:
-        return redirect("/", 301)
+        return redirect("/", 302)
 
     tag = tag.replace("-", " ")
     data = pdfdb.command("text", "pdf", search=tag, limit=10)

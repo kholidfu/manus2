@@ -1008,6 +1008,19 @@ def sitemap():
     return response
 
 
+@app.route("/latest")
+def latest():
+    docdb = c["pdfs"]
+    # skip_number = random.randint(0, pdftermsdb.term.find().count()-50)
+    # data = pdftermsdb.term.find().skip(skip_number).limit(50)
+    # data =pdftermsdb.term.find().sort("_id", -1)
+    data = docdb.pdf.find({"thumb_updated": {"$exists": True}}).sort("added", -1)
+    sitemap_xml = render_template("latest.xml", data=data)
+    response = make_response(sitemap_xml)
+    response.headers['Content-Type'] = 'application/xml'
+    return response
+
+
 @app.route('/recent.atom')
 def recent_feed():
     # http://werkzeug.pocoo.org/docs/contrib/atom/ 

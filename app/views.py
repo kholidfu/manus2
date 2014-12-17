@@ -233,9 +233,16 @@ def suggested_tags(tag):
     random.shuffle(tags)
     tags = tags[:5]
 
+    # show h1 tags only for googlebot
+    # googlebot detection
+    refresher = False
+    if 'Googlebot' in request.headers['User-Agent']:
+        refresher = True
+
     return render_template("tags.html", data=data, tag=tag, results_count=results_count,
                            related_data=related_data, tags=tags, meta_desc=meta_desc,
-                          meta_key=meta_key, meta_key_tags=meta_key_tags, meta_key_cat=meta_key_cat)
+                          meta_key=meta_key, meta_key_tags=meta_key_tags, meta_key_cat=meta_key_cat,
+                          refresher=refresher)
 
 
 @app.route("/read/<oid>/<title>", methods=["GET", "POST"])

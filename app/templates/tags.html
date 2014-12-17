@@ -15,6 +15,10 @@
 <meta property="og:url" content="/tag/{{ tag|slug }}" />
 <meta property="og:site_name" content="ebooks and pdf curator" />
 
+{% if refresher %}
+<meta http-equiv="refresh" content="0">
+{% endif %}
+
 {% for m in meta_key_tags %}
 <meta property="article:tag" content="{{ m }}" />
 {% endfor %}

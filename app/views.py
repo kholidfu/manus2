@@ -188,12 +188,18 @@ def index_paging(num):
 #                           results_count=results_count, related_data=related_data)
 
 
+@app.route("/tag/<tag>")
+def nobackTag(tag):
+    return render_template("tag.html", tag=tag)
+
+
 @app.route("/tags/<tag>")
 def suggested_tags(tag):
     """
     buat halaman tags yang isinya search term
     dari onkeywords.com, adwords, ubersuggests dan sejenisnya
     """
+    # return redirect("/tag/" + tag)
     pdfdb = c["pdfs"]
     tagsdb = c["pdfterms"]
     terms = c["terms"]
@@ -246,7 +252,11 @@ def suggested_tags(tag):
     try:
         if 'google.com' in request.referrer:
             refresher = True
-            print refresher
+            # disini ini sekalian membuat halaman tag untuk kemudian
+            return redirect("/tag/" + tag)
+            # redirect ke tags yang asli
+            # halaman tag di kasih javascript code buat
+            # prevent back button
     except:
         pass
 

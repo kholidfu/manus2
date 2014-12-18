@@ -3,3 +3,4 @@
 /add-comment
 /report-abuse
 /download/*
+/tag/*

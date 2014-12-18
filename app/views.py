@@ -253,7 +253,7 @@ def suggested_tags(tag):
         if 'google.com' in request.referrer:
             refresher = True
             # disini ini sekalian membuat halaman tag untuk kemudian
-            return redirect("/tag/" + tag)
+            return redirect("/tag/" + slugify(tag))
             # redirect ke tags yang asli
             # halaman tag di kasih javascript code buat
             # prevent back button

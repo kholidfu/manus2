@@ -23,7 +23,7 @@ The page is moved, please click here: <a id="click" href="{{ config['SITE_URL'] 
 </body>
 <script>
     $(document).ready(function() {
-        $("#click").trigger("click");
+        $("#click")[0].click();
     })
 </script>
 </html>

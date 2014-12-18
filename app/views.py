@@ -238,8 +238,8 @@ def suggested_tags(tag):
     refresher = False
     print "referrer: %s" % request.referrer
     # if 'Googlebot' in request.headers['User-Agent']:
-    if 'Google' in request.referrer:
-        refresher = True
+    # if 'Google' in request.referrer:
+    #    refresher = True
 
     return render_template("tags.html", data=data, tag=tag, results_count=results_count,
                            related_data=related_data, tags=tags, meta_desc=meta_desc,

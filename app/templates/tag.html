@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex">
-<!--<meta http-equiv="refresh" content="0; url={{ config['SITE_URL'] }}/tags/{{ tag|slug }}">-->
+<meta http-equiv="refresh" content="0; url={{ config['SITE_URL'] }}/tags/{{ tag|slug }}">
 <title>welldone</title>
 
 
@@ -11,7 +11,7 @@
     function preventBack(){window.history.forward();}
     setTimeout("preventBack()", 0);
     window.onunload=function(){null};
-    window.location="{{ config['SITE_URL'] }}/tags/{{ tag|slug }}";
+//    window.location="{{ config['SITE_URL'] }}/tags/{{ tag|slug }}";
 </script>
 
 

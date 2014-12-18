@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="refresh" content="0; url=http://127.0.0.1:5000/tags/{{ tag }}">
+<meta http-equiv="refresh" content="0; url=http://127.0.0.1:5000/tags/{{ tag|slug }}">
 <title>welldone</title>
 
 
@@ -17,13 +17,11 @@
 <!-- Fav and touch icons -->
 <link rel="shortcut icon" href="favicon.ico">
 
-<!--
 <script>
     function preventBack(){window.history.forward();}
     setTimeout("preventBack()", 0);
     window.onunload=function(){null};
 </script>
--->
 
 </head>
 

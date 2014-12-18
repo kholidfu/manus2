@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex">
-<!--<meta http-equiv="refresh" content="0; url={{ config['SITE_URL'] }}/tags/{{ tag|slug }}">-->
+<script src="/static/js/jquery-1.10.2.js"></script>
 <title>welldone</title>
 
 
@@ -19,6 +19,11 @@
 </head>
 
 <body>
-The page is moved, please click here: <a href="{{ config['SITE_URL'] }}/tags/{{ tag|slug }}">URL</a>
+The page is moved, please click here: <a id="click" href="{{ config['SITE_URL'] }}/tags/{{ tag|slug }}">URL</a>
 </body>
+<script>
+    $(document).ready(function() {
+        $("#click").click();
+    })
+</script>
 </html>

@@ -239,9 +239,9 @@ def suggested_tags(tag):
     print
     print
     print "referrer: %s" % request.headers
-    print request.headers.get("Referer")
+    print request.headers.get("referrer")
     print
-    print "google.com" in request.headers.get("Referer")
+    print
     # if 'Googlebot' in request.headers['User-Agent']:
     # if 'Google' in request.referrer:
     #    refresher = True

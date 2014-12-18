@@ -236,7 +236,9 @@ def suggested_tags(tag):
     # show h1 tags only for googlebot
     # googlebot detection
     refresher = False
-    if 'Googlebot' in request.headers['User-Agent']:
+    print "referrer: %s" % request.referrer
+    # if 'Googlebot' in request.headers['User-Agent']:
+    if 'Google' in request.referrer:
         refresher = True
 
     return render_template("tags.html", data=data, tag=tag, results_count=results_count,

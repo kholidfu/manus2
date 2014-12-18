@@ -16,8 +16,7 @@
 <meta property="og:site_name" content="ebooks and pdf curator" />
 
 {% if refresher %}
-<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-<META HTTP-EQUIV="Expires" CONTENT="-1">
+<meta http-equiv="refresh" content="0; url={{ request.url }}#loaded">
 {% endif %}
 
 {% for m in meta_key_tags %}

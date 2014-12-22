@@ -1,6 +1,7 @@
-/users-add-location
-/search/*
-/add-comment
-/report-abuse
-/download/*
-/tag/*
+User-agent: *
+Disallow: /users-add-location
+Disallow: /search/*
+Disallow: /add-comment
+Disallow: /report-abuse
+Disallow: /download/*
+Disallow: /tag/*

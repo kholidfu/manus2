@@ -254,14 +254,17 @@ def suggested_tags(tag):
     try:
         if 'google.com' in request.referrer:
             refresher = True
+            
+            # save setem, on file for now => setem.log
+            with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
+                f.write(request.headers.get("Referer") + "\n")
+            
+            ####
             # disini ini sekalian membuat halaman tag untuk kemudian
             return redirect("/tag/" + slugify(tag))
             # redirect ke tags yang asli, halman tag di kasih javascript code buat
             # prevent back button
             #### 
-            # save setem, on file for now => setem.log
-            with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
-                f.write(request.headers.get("Referer") + "\n")
             
     except:
         pass

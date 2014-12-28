@@ -261,7 +261,7 @@ def suggested_tags(tag):
             #### 
             # save setem, on file for now => setem.log
             with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
-                f.write(request.headers.get("Referer")
+                f.write(request.headers.get("Referer") + "\n")
             
     except:
         pass

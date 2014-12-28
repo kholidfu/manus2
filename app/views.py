@@ -28,7 +28,7 @@ dbentity = c["entities"]  # nanti ada dbentity.user, dbentity.admin, dll
 
 # users count
 users_count = dbentity.users.find().count()
-last_user = [i for i in dbentity.users.find()][-1]["username"]
+last_user = [i for i in dbentity.users.find()][-1]
 
 @app.template_filter()
 def slug(s):

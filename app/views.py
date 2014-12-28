@@ -642,7 +642,7 @@ def grabber():
             return "null"  # ini berarti sudah ada keyword yang ingin dicari, kembalikan lagi ke template, kasih alert apa kek
         else:
             # built url
-            url = "https://www.google.com/search?q=%s+filetype:pdf&num=10" % keyword.replace(" ", "+")
+            url = "https://www.google.com/search?q=%s+filetype:pdf+inurl:gov+inurl:edu&num=10" % keyword.replace(" ", "+")
             # insert into database
             # return "%s" % grab(url)
             data = grab(url)

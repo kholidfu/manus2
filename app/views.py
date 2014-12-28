@@ -278,7 +278,7 @@ def suggested_tags(tag):
     return render_template("tags.html", data=data, tag=tag, results_count=results_count,
                            related_data=related_data, tags=tags, meta_desc=meta_desc,
                           meta_key=meta_key, meta_key_tags=meta_key_tags, meta_key_cat=meta_key_cat,
-                          refresher=refresher)
+                           refresher=refresher, users_count=users_count, last_user=last_user)
 
 
 @app.route("/read/<oid>/<title>", methods=["GET", "POST"])

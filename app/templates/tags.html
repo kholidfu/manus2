@@ -160,7 +160,9 @@
 				nibh, ut fermentum..  </p>
 			</div>
             <div class="hero-unit smallerTopPadding">
-                <h3>Active Users</h3>
+           		<h3>Users Stat</h3>
+			<p style="padding-bottom: 0px;">Currently, we have {{ users_count }} users. Last registered user: {{ last_user['username'] }}, joined: {{ last_user['joined_at']|humanize }}.</p>
+			<p style="padding-bottom: 0;">Active users:</p>
                 <ol style="font-size: 12px; margin-left: 15px;">
                     <li><a href="http://www.seepdf.com/users/sopier3">marqonah</a></li>
                     <li><a href="http://www.seepdf.com/users/sopier4">joankey</a></li>

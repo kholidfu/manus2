@@ -26,6 +26,9 @@ import sys
 c = pymongo.Connection()
 dbentity = c["entities"]  # nanti ada dbentity.user, dbentity.admin, dll
 
+# users count
+users_count = dbentity.users.find().count()
+last_user = [i for i in dbentity.users.find()][-1]["username"]
 
 @app.template_filter()
 def slug(s):
@@ -132,7 +135,9 @@ def index():
         # thumbnail = False
         d["thumbnail"] = False
 
-    return render_template("index.html", data=data)
+    return render_template("index.html", data=data, users_count=users_count, 
+                           last_user=last_user
+    )
 
 
 @app.route("/page/<int:num>")

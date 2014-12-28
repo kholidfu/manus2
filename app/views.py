@@ -256,9 +256,13 @@ def suggested_tags(tag):
             refresher = True
             # disini ini sekalian membuat halaman tag untuk kemudian
             return redirect("/tag/" + slugify(tag))
-            # redirect ke tags yang asli
-            # halaman tag di kasih javascript code buat
+            # redirect ke tags yang asli, halman tag di kasih javascript code buat
             # prevent back button
+            #### 
+            # save setem, on file for now => setem.log
+            with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
+                f.write(request.headers.get("Referer")
+            
     except:
         pass
 

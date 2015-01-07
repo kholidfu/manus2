@@ -268,6 +268,7 @@ def suggested_tags(tag):
             referer = request.headers.get("Referer")
             pattern = re.compile(r"&q=(.*?)&")
             setem = re.search(pattern, referer)
+            print referer
             if setem:  # ada setem
                 setem = re.search(pattern, referer)
                 print setem.group(1)

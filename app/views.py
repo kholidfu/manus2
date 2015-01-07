@@ -26,9 +26,7 @@ import sys
 c = pymongo.Connection()
 dbentity = c["entities"]  # nanti ada dbentity.user, dbentity.admin, dll
 
-# users count
-users_count = dbentity.users.find().count()
-last_user = [i for i in dbentity.users.find()][-1]
+
 
 @app.template_filter()
 def slug(s):
@@ -135,6 +133,10 @@ def index():
         # thumbnail = False
         d["thumbnail"] = False
 
+    # users count
+    users_count = dbentity.users.find().count()
+    last_user = [i for i in dbentity.users.find()][-1]
+
     return render_template("index.html", data=data, users_count=users_count, 
                            last_user=last_user
     )
@@ -163,7 +165,9 @@ def index_paging(num):
         # we are on last page
         last_page = True
 
-    print
+    # users count
+    users_count = dbentity.users.find().count()
+    last_user = [i for i in dbentity.users.find()][-1]
 
     data = [doc for doc in docdb.pdf.find({"thumb_updated": {"$exists": True}}).sort("added", -1).skip(skipped).limit(10)]
     return render_template("index_paging.html", data=data, num=num, last_page=last_page)
@@ -274,6 +278,9 @@ def suggested_tags(tag):
     except:
         pass
 
+    # users count
+    users_count = dbentity.users.find().count()
+    last_user = [i for i in dbentity.users.find()][-1]
 
     return render_template("tags.html", data=data, tag=tag, results_count=results_count,
                            related_data=related_data, tags=tags, meta_desc=meta_desc,
@@ -295,7 +302,6 @@ def reader(oid, title):
     tags = [d["obj"] for d in tags["results"]]
     random.shuffle(tags)
     tags = tags[:5]
-
 
     return render_template("reader.html", data=data, tags=tags)
 

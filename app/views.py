@@ -265,8 +265,16 @@ def suggested_tags(tag):
             refresher = True
             
             # save setem, on file for now => setem.log
-            with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
-                f.write(request.headers.get("Referer") + "\n")
+            referer = request.headers.get("Referer")
+            pattern = re.compile(r"&q=(.*?)&")
+            if re.search(pattern, referer):  # ada setem
+                setem = re.search(pattern, referer).group(1)
+                # write to file
+                with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
+                    f.write(setem + "\n")
+            else:
+                with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
+                    f.write("None bang!" + "\n")
             
             ####
             # disini ini sekalian membuat halaman tag untuk kemudian

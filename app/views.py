@@ -267,11 +267,13 @@ def suggested_tags(tag):
             # save setem, on file for now => setem.log
             referer = request.headers.get("Referer")
             pattern = re.compile(r"&q=(.*?)&")
-            if re.search(pattern, referer):  # ada setem
-                setem = re.search(pattern, referer).group(1)
+            setem = re.search(pattern, referer)
+            if setem:  # ada setem
+                setem = re.search(pattern, referer)
+                print setem.group(1)
                 # write to file
                 with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
-                    f.write(setem + "\n")
+                    f.write(setem.group(1) + "\n")
             else:
                 with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
                     f.write("None bang!" + "\n")

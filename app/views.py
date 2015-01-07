@@ -265,16 +265,17 @@ def suggested_tags(tag):
             refresher = True
             
             # save setem, on file for now => setem.log
+            from urllib import unquote_plus
             referer = request.headers.get("Referer")
             pattern = re.compile(r"&q=(.*?)&")
             setem = re.search(pattern, referer)
-            print referer
+            # print referer
             if setem:  # ada setem
                 setem = re.search(pattern, referer)
                 print setem.group(1)
                 # write to file
                 with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
-                    f.write(setem.group(1) + "\n")
+                    f.write(unquote_plus(setem.group(1)) + "\n")
             else:
                 with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
                     f.write("None bang!" + "\n")

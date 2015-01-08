@@ -1110,8 +1110,8 @@ def sitemap_files_depth_2(a, b):
     basedir = os.path.abspath(os.path.join(os.getcwd(), '..', 'ninjalatex', 'assets', a, b))
     dir = []
     for i in os.listdir(basedir):
-        dir.append(i)
-    sitemap = render_template("sitemap_files.xml", data=dir)
+        dir.append("%s/%s/%s" % (a, b, i))
+    sitemap = render_template("sitemap_details.xml", data=dir)
     response = make_response(sitemap)
     response.headers['Content-Type'] = 'application/xml'
     return response

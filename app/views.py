@@ -276,10 +276,7 @@ def suggested_tags(tag):
                 # write to file
                 with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
                     f.write(unquote_plus(setem.group(1)) + "\n")
-            else:
-                with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
-                    f.write("None bang!" + "\n")
-            
+
             ####
             # disini ini sekalian membuat halaman tag untuk kemudian
             return redirect("/tag/" + slugify(tag))
@@ -1059,12 +1056,63 @@ def users_register():
 
 @app.route("/sitemap")
 def sitemap():
+    """
+    sorted yang terbaru
+    """
     pdftermsdb = c["pdfterms"]
     # skip_number = random.randint(0, pdftermsdb.term.find().count()-50)
     # data = pdftermsdb.term.find().skip(skip_number).limit(50)
-    data =pdftermsdb.term.find().sort("_id", -1)
+    data = pdftermsdb.term.find().sort("_id", -1)
     sitemap_xml = render_template("sitemap.xml", data=data)
     response = make_response(sitemap_xml)
+    response.headers['Content-Type'] = 'application/xml'
+    return response
+
+
+@app.route("/xml/index")
+def sitemap_files():
+    """
+    sitemap buat file2 pdf
+    lama indeksnya :(
+    """
+    basedir = os.path.abspath(os.path.join(os.getcwd(), '..', 'ninjalatex', 'assets'))
+    dir = []
+    for i in os.listdir(basedir):
+        dir.append(i)
+    sitemap = render_template("sitemap_files.xml", data=dir)
+    response = make_response(sitemap)
+    response.headers['Content-Type'] = 'application/xml'
+    return response
+
+
+@app.route("/xml/index/<a>")
+def sitemap_files_depth_1(a):
+    """
+    sitemap buat file2 pdf
+    lama indeksnya :(
+    """
+    basedir = os.path.abspath(os.path.join(os.getcwd(), '..', 'ninjalatex', 'assets', a))
+    dir = []
+    for i in os.listdir(basedir):
+        dir.append(i)
+    sitemap = render_template("sitemap_files.xml", data=dir)
+    response = make_response(sitemap)
+    response.headers['Content-Type'] = 'application/xml'
+    return response
+
+
+@app.route("/xml/index/<a>/<b>")
+def sitemap_files_depth_2(a, b):
+    """
+    sitemap buat file2 pdf
+    lama indeksnya :(
+    """
+    basedir = os.path.abspath(os.path.join(os.getcwd(), '..', 'ninjalatex', 'assets', a, b))
+    dir = []
+    for i in os.listdir(basedir):
+        dir.append(i)
+    sitemap = render_template("sitemap_files.xml", data=dir)
+    response = make_response(sitemap)
     response.headers['Content-Type'] = 'application/xml'
     return response
 

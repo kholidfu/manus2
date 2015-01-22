@@ -841,7 +841,7 @@ def incoming_search_term():
     # get the data from database
     # so far, we only have text file database that is setem.log
     with open(os.path.join(os.getcwd(), "setem.log")) as f:
-        data = [i.strip() for i in f.readlines()][:10]
+        data = [i.strip() for i in f.readlines()][-50:]
 
     return render_template("admin/admin_incoming_search_term.html", data=data)
 

@@ -275,7 +275,8 @@ def suggested_tags(tag):
                 print setem.group(1)
                 # write to file
                 with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
-                    f.write(unquote_plus(setem.group(1)) + "\n")
+                    if setem.group(1):  # remove nil setem
+                        f.write(unquote_plus(setem.group(1)) + "\n")
 
             ####
             # disini ini sekalian membuat halaman tag untuk kemudian

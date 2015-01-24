@@ -275,7 +275,7 @@ def suggested_tags(tag):
                 print setem.group(1)
                 # write to file
                 with open(os.path.join(os.getcwd(), "setem.log"), "a") as f:
-                    if setem.group(1):  # remove nil setem
+                    if len(setem.group(1)) > 5:  # remove nil setem
                         f.write(unquote_plus(setem.group(1)) + "\n")
 
             ####

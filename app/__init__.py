@@ -30,7 +30,11 @@ from app import views
 # calling from jinja => {{ config["domain_name"] }}
 # ambil informasi ini dari settings.ini
 parser = SafeConfigParser()
-settings_path = os.path.join(os.getcwd(), "app", "settings.ini")
+# settings_path = os.path.join(os.getcwd(), "app", "settings.ini")
+settings_path = os.path.join(
+    os.path.abspath(os.path.dirname(__file__)),
+    "settings.ini"
+    )
 parser.read(settings_path)
 
 url = parser.get("site_config", "url")

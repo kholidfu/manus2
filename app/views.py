@@ -60,7 +60,7 @@ def jinja2_filter_get_first_word(sentence):
     return sentence.split()[0]
 
 
-@app.route("/thumb/<year>/<month>/<day>/<file_path>")
+@app.route("/img/<year>/<month>/<day>/<file_path>")
 def get_thumb_assets(year, month, day, file_path):
     """
     get marketplace assets
@@ -197,13 +197,13 @@ def index_paging(num):
 #                           results_count=results_count, related_data=related_data)
 
 
-@app.route("/tag/<tag>")
-def nobackTag(tag):
-    return render_template("tag.html", tag=tag)
+@app.route("/topic/<tag>")
+def nobackTag(topic):
+    return render_template("topic.html", tag=tag)
 
 
-@app.route("/tags/<tag>")
-def suggested_tags(tag):
+@app.route("/topics/<tag>")
+def suggested_topics(tag):
     """
     buat halaman tags yang isinya search term
     dari onkeywords.com, adwords, ubersuggests dan sejenisnya
@@ -280,7 +280,7 @@ def suggested_tags(tag):
 
             ####
             # disini ini sekalian membuat halaman tag untuk kemudian
-            return redirect("/tag/" + slugify(tag))
+            return redirect("/topic/" + slugify(tag))
             # redirect ke tags yang asli, halman tag di kasih javascript code buat
             # prevent back button
             #### 
@@ -292,14 +292,14 @@ def suggested_tags(tag):
     users_count = dbentity.users.find().count()
     last_user = [i for i in dbentity.users.find()][-1]
 
-    return render_template("tags.html", data=data, tag=tag, results_count=results_count,
+    return render_template("topics.html", data=data, tag=tag, results_count=results_count,
                            related_data=related_data, tags=tags, meta_desc=meta_desc,
                           meta_key=meta_key, meta_key_tags=meta_key_tags, meta_key_cat=meta_key_cat,
                            refresher=refresher, users_count=users_count, last_user=last_user)
 
 
-@app.route("/read/<oid>/<title>", methods=["GET", "POST"])
-def reader(oid, title):
+@app.route("/view/<oid>/<title>", methods=["GET", "POST"])
+def viewer(oid, title):
     """
     PDF reader using google docs preview
     """
@@ -313,20 +313,21 @@ def reader(oid, title):
     random.shuffle(tags)
     tags = tags[:5]
 
-    return render_template("reader.html", data=data, tags=tags)
+    return render_template("viewer.html", data=data, tags=tags)
 
 
-@app.route("/view/<oid>")
-def view_url(oid):
+@app.route("/source/<oid>")
+def view_source(oid):
     """
-    redirect to original link
+    redirect to original hotlink
+    ex: http://www.otherpeople.com/blabla.pdf
     """
     docdb = c["pdfs"]
     data = docdb.pdf.find_one({"_id": ObjectId(oid)})
     return redirect(data["url"])
 
 
-@app.route("/download/<title>")
+@app.route("/get/<title>")
 def download(title):
     """
     redirect to ad-center landing page

@@ -12,7 +12,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:title" content="{{ tag|replace("-", " ") }}" />
 <meta property="og:description" content="{{ meta_desc }}" />
-<meta property="og:url" content="/tag/{{ tag|slug }}" />
+<meta property="og:url" content="/topic/{{ tag|slug }}" />
 <meta property="og:site_name" content="ebooks and pdf curator" />
 
 {% if refresher %}
@@ -73,7 +73,7 @@
                             Filetype: Portable Document Format (PDF)<br />
                             Related tags:
                             {% for tag in tags %}
-                            <a href="/tags/{{ tag.term|slug }}">{{ tag.term }}</a>
+                            <a href="/topics/{{ tag.term|slug }}">{{ tag.term }}</a>
                             {% if not loop.last %},{% else %}.{% endif %}
                             {% endfor %}
                         </p>
@@ -94,9 +94,9 @@
 		<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #f0ad4e;">
 	        <h3 style="font-size: 11px; margin: 0;">Sponsored Downloads</h3>
             <div class="span7" style="margin-left: 0;">
-                <span class="glyphicon glyphicon-download" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/download/{{ tag }}" rel="noindex, nofollow">{{ tag|replace("-", " ")|title|truncate(60) }} PDF</a></button><br />
-                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/download/{{ tag }}" rel="noindex, nofollow">{{ tag|replace("-", " ")|title|truncate(60) }} [FULL]</a></button><br />
-                <span class="glyphicon glyphicon-cloud" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/download/{{ tag }}" rel="noindex, nofollow">{{ tag|replace("-", " ")|truncate(60)|replace(" ", "-") }}.pdf</a></button>
+                <span class="glyphicon glyphicon-download" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/get/{{ tag }}" rel="noindex, nofollow">{{ tag|replace("-", " ")|title|truncate(60) }} PDF</a></button><br />
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/get/{{ tag }}" rel="noindex, nofollow">{{ tag|replace("-", " ")|title|truncate(60) }} [FULL]</a></button><br />
+                <span class="glyphicon glyphicon-cloud" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/get/{{ tag }}" rel="noindex, nofollow">{{ tag|replace("-", " ")|truncate(60)|replace(" ", "-") }}.pdf</a></button>
             </div>
             <div class="span2" style="margin-left: 0;">
                 <span style="font-size: 14px; display: block; margin-bottom: 10px; text-align: right;">3128 Kb/s</span>
@@ -115,7 +115,7 @@
 			<div class="hero-unit smallerTopPadding">
                 {% if d['thumb_updated'] %}
                 <div style="float: left; padding-right: 15px;padding-bottom: 80px;padding-top: 24px;">
-                    <img src="/thumb/{{ d['fpath'] }}" style="border: 1px solid #ddd; padding: 4px;" alt="{{ d['title'] }}" title="{{ d['title'] }}" />
+                    <img src="/img/{{ d['fpath'] }}" style="border: 1px solid #ddd; padding: 4px;" alt="{{ d['title'] }}" title="{{ d['title'] }}" />
                 </div>
                 {% else %}
                 <div style="float: left; padding-right: 15px;padding-bottom: 80px;padding-top: 24px;">
@@ -137,15 +137,15 @@
                     Updated: {{ d['updated'] }}<br />
                     {% endif %}
                     Filetype: Portable Document Format (PDF)<br />
-                    Source: &nbsp;<a href="/view/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
+                    Source: &nbsp;<a href="/source/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
                     Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;"></span><br />
                     {% if session %}
-                    Add to your collection: <a href="/read/{{ d['_id'] }}/{{ d['title']|truncate(50)|slug }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green; cursor: pointer;" data-oid="{{ d['_id'] }}"></span></a>
+                    Add to your collection: <a href="/view/{{ d['_id'] }}/{{ d['title']|truncate(50)|slug }}"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: green; cursor: pointer;" data-oid="{{ d['_id'] }}"></span></a>
                     {% endif %}
                 </p>
                 {% if "admin" in session %}
                 <button type="submit" class="buttonUpdate" data-oid="{{ d['_id'] }}">Update</button>
-                <a href="/read/{{ d['_id'] }}/{{ d['title']|slug }}" target="_blank" style="font-size: 13px;">Read this file</a>
+                <a href="/view/{{ d['_id'] }}/{{ d['title']|slug }}" target="_blank" style="font-size: 13px;">Read this file</a>
                 <a href="http://docs.google.com/viewer?url={{ d['url'] }}&a=bi&pagenumber=1&w=" target="_blank" style="font-size: 13px;">View Larger Thumb</a>
                 {% endif %}
 			</div>
@@ -164,15 +164,15 @@
 			<p style="padding-bottom: 0px;">Currently, we have {{ users_count }} users. Last registered user: {{ last_user['username'] }}, joined: {{ last_user['joined_at']|humanize }}.</p>
 			<p style="padding-bottom: 0;">Active users:</p>
                 <ol style="font-size: 12px; margin-left: 15px;">
-                    <li><a href="http://www.seepdf.com/users/sopier3">marqonah</a></li>
-                    <li><a href="http://www.seepdf.com/users/sopier4">joankey</a></li>
+                    <li><a href="/users/sopier3">marqonah</a></li>
+                    <li><a href="/users/sopier4">joankey</a></li>
                 </ol>
             </div>
             <div class="hero-unit smallerTopPadding">
            		<h3>Related Query</h3>
            		<ol style="margin-left: 15px;">
                     {% for rel in related_data %}
-                    <li style="font-size: 11px;"><a href="/tags/{{ rel['term']|slug }}">{{ rel['term']|truncate(40) }}</a></li>
+                    <li style="font-size: 11px;"><a href="/topics/{{ rel['term']|slug }}">{{ rel['term']|truncate(40) }}</a></li>
                     {% endfor %}
                 </ol>
 			</div>
@@ -239,8 +239,8 @@
         $(".h2Title").click(function() {
             var oid = $(this).attr("data-oid");
             var title = $(this).attr("data-title");
-            window.open("/read/" + oid + "/" + title);
-            // alert("/read/" + oid + "/" + title);
+            window.open("/view/" + oid + "/" + title);
+            // alert("/view/" + oid + "/" + title);
             return false;
         })
     })

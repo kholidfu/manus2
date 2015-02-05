@@ -11,15 +11,15 @@
     function preventBack(){window.history.forward();}
     setTimeout("preventBack()", 0);
     window.onunload=function(){null};
-    // window.location="{{ config['SITE_URL'] }}/tags/{{ tag|slug }}";
-    // location.href="{{ config['SITE_URL'] }}/tags/{{ tag|slug }}";
+    // window.location="{{ config['SITE_URL'] }}/topics/{{ tag|slug }}";
+    // location.href="{{ config['SITE_URL'] }}/topics/{{ tag|slug }}";
 </script>
 
 
 </head>
 
 <body>
-The page is moved, please click here: <a id="click" href="{{ config['SITE_URL'] }}/tags/{{ tag|slug }}">URL</a>
+The page is moved, please click here: <a id="click" href="{{ config['SITE_URL'] }}/topics/{{ tag|slug }}">URL</a>
 </body>
 <script>
     $(document).ready(function() {

@@ -23,9 +23,9 @@
         <h1 style="font-size: 20px; padding-left: 12px;">Your Books Collection</h1>
         {% for fav in favorites %}
 
-          <a href="/read/{{ fav[0] }}/{{ fav[3] }}">
+          <a href="/view/{{ fav[0] }}/{{ fav[3] }}">
               {% if fav[1] %}
-              <img src="/thumb/{{ fav[2] }}" style="border: 1px solid #ddd; padding: 4px; margin-right: 17px; width: 100px; height: 135px; margin-bottom: 15px;">
+              <img src="/img/{{ fav[2] }}" style="border: 1px solid #ddd; padding: 4px; margin-right: 17px; width: 100px; height: 135px; margin-bottom: 15px;">
               {% else %}
               <img src="/static/images/no_logo.gif" style="border: 1px solid #ddd; padding: 4px; margin-right: 17px; width: 100px; height: 135px;  margin-bottom: 15px;" title="{{ fav[3] }}" alt="{{ fav[3] }}">
               {% endif %}

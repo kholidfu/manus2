@@ -72,7 +72,7 @@
 			<div class="hero-unit smallerTopPadding">
                 {% if d['thumb_updated'] %}
                 <div style="float: left; padding-right: 15px;padding-bottom: 80px;padding-top: 24px;">
-                    <img src="/thumb/{{ d['fpath'] }}" style="border: 1px solid #ddd; padding: 4px;" alt="{{ d['title'] }}" title="{{ d['title'] }}" />
+                    <img src="/img/{{ d['fpath'] }}" style="border: 1px solid #ddd; padding: 4px;" alt="{{ d['title'] }}" title="{{ d['title'] }}" />
                 </div>
                 {% endif %}
                 {% if "admin" in session %}
@@ -85,7 +85,7 @@
                     Added: {{ d['added']|humanize }}<br />
                     Updated: {{ d['thumb_updated']|humanize }}<br />
                     Filetype: Portable Document Format (PDF)<br />
-                    Source: &nbsp;<a href="/view/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
+                    Source: &nbsp;<a href="/source/{{ d['_id'] }}" rel="nofollow, noindex" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a><br />
 
                     Report Abuse: <span class="glyphicon glyphicon-flash" aria-hidden="true" style="color: red;" data-oid="{{ d['_id'] }}" data-title="{{ d['title']|truncate(50)|slug }}"></span><span class="glyphicon glyphicon-saved abused" aria-hidden="true" style="color: red; display: none;"></span><br />
 
@@ -94,7 +94,7 @@
                 </p>
                 {% if "admin" in session %}
                 <button type="submit" class="buttonUpdate" data-oid="{{ d['_id'] }}">Update</button>
-                <a href="/read/{{ d['_id'] }}/{{ d['title']|slug }}" target="_blank" style="font-size: 13px;">Read this file</a>
+                <a href="/view/{{ d['_id'] }}/{{ d['title']|slug }}" target="_blank" style="font-size: 13px;">Read this file</a>
                 <a href="http://docs.google.com/viewer?url={{ d['url'] }}&a=bi&pagenumber=1&w=" target="_blank" style="font-size: 13px;">View Larger Thumb</a>
                 {% endif %}
 			</div>
@@ -115,8 +115,8 @@
 			<p style="padding-bottom: 0px;">Currently, we have {{ users_count }} users. Last registered user: {{ last_user['username'] }}, joined: {{ last_user['joined_at']|humanize }}.</p>
 			<p style="padding-bottom: 0;">Active users:</p>
                 <ol style="font-size: 12px; margin-left: 15px;">
-                    <li><a href="http://www.seepdf.com/users/sopier3">marqonah</a></li>
-                    <li><a href="http://www.seepdf.com/users/sopier4">joankey</a></li>
+                    <li><a href="/users/sopier3">marqonah</a></li>
+                    <li><a href="/users/sopier4">joankey</a></li>
                 </ol>
 
 			</div>
@@ -215,15 +215,15 @@
         $(".h2Title").click(function() {
             var oid = $(this).attr("data-oid");
             var title = $(this).attr("data-title");
-            window.open("/read/" + oid + "/" + title);
-            // alert("/read/" + oid + "/" + title);
+            window.open("/view/" + oid + "/" + title);
+            // alert("/view/" + oid + "/" + title);
             return false;
         })
         $("h1").click(function() {
             var oid = $(this).attr("data-oid");
             var title = $(this).attr("data-title");
-            window.open("/read/" + oid + "/" + title);
-            // alert("/read/" + oid + "/" + title);
+            window.open("/view/" + oid + "/" + title);
+            // alert("/view/" + oid + "/" + title);
             return false;
         })
     })

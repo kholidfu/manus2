@@ -91,16 +91,25 @@
 
 	<!--start row-->
     <div class="row-fluid">
-		<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #f0ad4e;">
+		<div class="hero-unit" style="border-left: 5px solid #f0ad4e;">
 	        <h3 style="font-size: 11px; margin: 0;">Sponsored Downloads</h3>
             <div class="span7" style="margin-left: 0;">
-                <span class="glyphicon glyphicon-download" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/get/{{ tag }}" rel="noindex, nofollow">{{ tag|replace("-", " ")|title|truncate(60) }} PDF</a></button><br />
-                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/get/{{ tag }}" rel="noindex, nofollow">{{ tag|replace("-", " ")|title|truncate(60) }} [FULL]</a></button><br />
-                <span class="glyphicon glyphicon-cloud" aria-hidden="true" style="color: green;"></span> <button type="button" class="btn btn-success" style="margin-left: 0px; margin-bottom: 10px;"><a href="/get/{{ tag }}" rel="noindex, nofollow">{{ tag|replace("-", " ")|truncate(60)|replace(" ", "-") }}.pdf</a></button>
+                <span class="glyphicon glyphicon-download" aria-hidden="true" style="color: green;"></span> 
+		  <a href="/get/{{ tag }}" rel="noindex, nofollow" class="btn btn-success" style="margin-left: 0px; margin-bottom: 0px;">{{ tag|replace("-", " ")|title|truncate(60) }} PDF</a>
+		<br />
+                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="color: green;"></span> 
+
+		  <a href="/get/{{ tag }}" rel="noindex, nofollow" class="btn btn-success" style="margin-left: 0px; margin-bottom: 0px;">{{ tag|replace("-", " ")|title|truncate(60) }} [FULL]</a>
+
+		<br />
+                <span class="glyphicon glyphicon-cloud" aria-hidden="true" style="color: green;"></span> 
+
+		  <a href="/get/{{ tag }}" rel="noindex, nofollow" class="btn btn-success" style="margin-left: 0px; margin-bottom: 0px;">{{ tag|replace("-", " ")|truncate(60)|replace(" ", "-") }}.pdf</a>
+
             </div>
             <div class="span2" style="margin-left: 0;">
-                <span style="font-size: 14px; display: block; margin-bottom: 10px; text-align: right;">3128 Kb/s</span>
-                <span style="font-size: 14px; display: block; margin-bottom: 10px; text-align: right;">2087 Kb/s</span>
+                <span style="font-size: 14px; display: block; text-align: right;">3128 Kb/s</span>
+                <span style="font-size: 14px; display: block; text-align: right;">2087 Kb/s</span>
                 <span style="font-size: 14px; display: block; text-align: right;">678 Kb/s</span>
             </div>
 		</div>

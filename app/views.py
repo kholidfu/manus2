@@ -198,7 +198,7 @@ def index_paging(num):
 
 
 @app.route("/topic/<tag>")
-def nobackTag(topic):
+def nobackTag(tag):
     return render_template("topic.html", tag=tag)
 
 

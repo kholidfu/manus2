@@ -4,7 +4,6 @@
 {% for d in data %}
 <url>
     <loc>{{ config['SITE_URL'] }}/tags/{{ d.term|slug }}</loc>
-    <lastmod>2014-12-04 03:56:48</lastmod>
     <changefreq>always</changefreq>
     <priority>1.0</priority>
 </url>

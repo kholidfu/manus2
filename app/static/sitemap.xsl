@@ -70,7 +70,6 @@
 							<th>URL</th>
 							<th>Priority</th>
 							<th>Change Frequency</th>
-							<th>LastChange (GMT)</th>
 						</tr>
 						<xsl:variable name="lower" select="'abcdefghijklmnopqrstuvwxyz'"/>
 						<xsl:variable name="upper" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>

@@ -391,6 +391,16 @@ def about():
     return render_template("about.html")
 
 
+@app.route("/dmca")
+def dmca():
+    return render_template("dmca.html")
+
+
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
+
+
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":

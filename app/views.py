@@ -333,7 +333,7 @@ def download(title):
     redirect to ad-center landing page
     """
     # return redirect("http://ads.ad-center.com/offer?prod=101&ref=4988911&q=" + title.replace("-", " ").title())
-    return redirect("http://ads.ad-center.com/offer?prod=141&ref=5033028&q=" + title.replace("-", " ").title())
+    return redirect("http://ads.ad-center.com/offer?prod=8&ref=5033028&q=" + title.replace("-", " ").title())
 
 
 @app.route("/users-add-collection", methods=["POST"])

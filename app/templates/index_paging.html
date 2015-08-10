@@ -33,7 +33,17 @@
 		<div class="row-fluid">
 
 			<div class="hero-unit">
-	    		<div class="span5 banner"></div>
+	    		<div class="span5 banner">
+				  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				  <!-- doocu338x280 -->
+				  <ins class="adsbygoogle"
+					   style="display:inline-block;width:336px;height:280px"
+					   data-ad-client="ca-pub-7709072540294219"
+					   data-ad-slot="8170193489"></ins>
+				  <script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				  </script>
+				</div>
 
 				<div class="span7">
 					<h1 style="font-size: 18px; cursor: pointer;" data-oid="{{ data[0]['_id'] }}" data-title="{{ data[0]['title']|slug }}">{{ data[0]['title']|safe|title }}</h1>
@@ -59,7 +69,16 @@
     <div class="row-fluid">
 		<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #f0ad4e;">
 	        <h3 style="font-size: 11px;">Sponsored Ads</h3>
-            <p style="padding-bottom: 0px;"></p>
+            <p style="padding-bottom: 0px;">
+			  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			  <ins class="adsbygoogle"
+				   style="display:inline-block;width:728px;height:90px"
+				   data-ad-client="ca-pub-7709072540294219"
+				   data-ad-slot="3600393088"></ins>
+			  <script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+			  </script>
+			</p>
 		</div>
     </div>
     <!--end row-->
@@ -127,11 +146,11 @@
 		<div class="hero-unit smallerTopPadding" style="border-left: 5px solid #f0ad4e;">
 	        <ul class="pager pager-sm">
                 {% if last_page %}
-                <li class="previous"><a href="/page/{{ num - 1 }}" rel="noindex, follow">&larr; Older</a></li>
-                <li class="next disabled"><a href="#" rel="noindex, follow">Newer &rarr;</a></li>
+                <li class="previous"><a href="/page/{{ num - 1 }}" rel="noindex, follow">&larr; Newer</a></li>
+                <li class="next disabled"><a href="#" rel="noindex, follow">Older &rarr;</a></li>
                 {% else %}
-                <li class="previous"><a href="/page/{{ num - 1 }}" rel="noindex, follow">&larr; Older</a></li>
-                <li class="next"><a href="/page/{{ num + 1}}" rel="noindex, follow">Newer &rarr;</a></li>
+                <li class="previous"><a href="/page/{{ num - 1 }}" rel="noindex, follow">&larr; Newer</a></li>
+                <li class="next"><a href="/page/{{ num + 1}}" rel="noindex, follow">Older &rarr;</a></li>
                 {% endif %}
             </ul>
 		</div>
